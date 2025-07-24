@@ -56,7 +56,9 @@ namespace MiAppVeterinaria.Services
         public string DeleteMascotaById(int idMascota) {
             return _mascotaRepository.EliminarMascotaPorId(idMascota);            
         }
-        public void UpdateMascotaById() { }
+        public string UpdateMascotaById(MascotaDTO m) {
+            return _mascotaRepository.ActualizarMascota(m);
+        }
 
         private string ObtenerNombreEspeciePorId(int especieId)
         {

@@ -49,7 +49,7 @@ namespace MiAppVeterinaria.Repository
                 {
                     conn.Open();
 
-                    string query = "SELECT c.ConsultaId, c.Sintoma,c.FechaConsulta,c.Emergencia,c.Veterinario AS Veterinario,m.id_mascota AS MascotaId, m.nombre_mascota AS Mascota FROM Consulta c INNER JOIN Mascota m ON m.id_mascota = c.MascotaId";
+                    string query = "SELECT c.ConsultaId, c.Sintoma,c.FechaConsulta,c.Emergencia, CONCAT(v.Nombre, ' ', v.Apellido )AS Veterinario,m.id_mascota AS MascotaId, m.nombre_mascota AS Mascota, c.Veterinario AS VeterinarioId FROM Consulta c INNER JOIN Mascota m ON m.id_mascota = c.MascotaId INNER JOIN veterinario v ON v.VeterinarioId = c.veterinario";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader()){
@@ -61,6 +61,7 @@ namespace MiAppVeterinaria.Repository
                                     Sintomas = reader["Sintoma"].ToString(),
                                     Fecha = Convert.ToDateTime(reader["FechaConsulta"]),
                                     Veterinario = reader["Veterinario"].ToString(),
+                                    VeterinarioId = Convert.ToInt32(reader["VeterinarioId"]),
                                     Emergencia = Convert.ToBoolean(reader["Emergencia"]),
                                     MascotaId = Convert.ToInt32(reader["MascotaId"]), 
                                     Mascota = reader["Mascota"].ToString(),
@@ -76,7 +77,70 @@ namespace MiAppVeterinaria.Repository
             {
                 throw;
             }
-            return listaHistorial;
+        }
+        public string EliminarConsulta(int idConsulta)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConnection.GetInstance().CreateConnection())
+                {
+                    System.Diagnostics.Debug.WriteLine("[INFO] Creando conexión...");
+                    conn.Open();
+                    System.Diagnostics.Debug.WriteLine("[INFO] Conexión abierta.");
+
+                    string query = "DELETE FROM consulta WHERE ConsultaId = @idConsulta";
+                    System.Diagnostics.Debug.WriteLine("[SQL] " + query);
+                    System.Diagnostics.Debug.WriteLine("[PARAM] @idConsulta = " + idConsulta);
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idConsulta", idConsulta);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        System.Diagnostics.Debug.WriteLine("[RESULT] Filas afectadas: " + rowsAffected);
+
+                        if (rowsAffected == 0)
+                            return "No se encontró la consulta a eliminar.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ERROR] " + ex.Message);
+                return $"Error al eliminar: {ex.Message}";
+            }
+
+            return "Consulta eliminada con éxito.";
+        }
+        public string ActualizarConsulta(ConsultaDTO c)
+        {
+            try
+            {
+                using(MySqlConnection conn = DBConnection.GetInstance().CreateConnection())
+                {
+                    conn.Open();
+                    string query = @"UPDATE Consulta 
+                                    SET MascotaId = @MascotaId, 
+                                        Sintoma = @Sintoma, 
+                                        Veterinario = @Veterinario, 
+                                        FechaConsulta = @FechaConsulta  
+                                    WHERE ConsultaId = @id; ";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn)){
+                        cmd.Parameters.AddWithValue("@MascotaId", c.MascotaId);
+                        cmd.Parameters.AddWithValue("@Sintoma", c.Sintomas);
+                        cmd.Parameters.AddWithValue("@Veterinario", c.Veterinario);
+                        cmd.Parameters.AddWithValue("@FechaConsulta", c.Fecha);
+                        cmd.Parameters.AddWithValue("@id", c.Id);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return $"{ex.Message}";
+            }
+            return "Consulta actualizada correctamente";
         }
     }
 }

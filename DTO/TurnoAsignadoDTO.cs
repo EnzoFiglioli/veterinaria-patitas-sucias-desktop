@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MiAppVeterinaria.DTO
 {
-    class TurnoAsignadoDTO
+    public class TurnoAsignadoDTO
     {
         public int Id { get; set; }
         public string Mascota { get; set; }

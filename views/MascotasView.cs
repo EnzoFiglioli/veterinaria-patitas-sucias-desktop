@@ -122,6 +122,7 @@ namespace MiAppVeterinaria.Views
             {
                 cmbEspecie.SelectedIndex = 0;
             }
+            
 
             txtRaza = new TextBox { Width = 250 };
             numEdad = new NumericUpDown { Width = 250, Maximum = 40 };
@@ -325,13 +326,35 @@ namespace MiAppVeterinaria.Views
             if (selectedRow != null && ValidarFormulario())
             {
                 var row = dgvMascotas.Rows[(int)selectedRow];
-                row.Cells[0].Value = txtNombre.Text;
-                row.Cells[1].Value = cmbEspecie.Text;
-                row.Cells[2].Value = txtRaza.Text;
-                row.Cells[3].Value = numEdad.Value;
-                row.Cells[4].Value = cmbDuenio.Text;
-                LimpiarCampos();
+                int ix = Convert.ToInt32(row.Cells[0].Value);
+                row.Cells[1].Value = txtNombre.Text;
+                row.Cells[2].Value = cmbEspecie.SelectedItem;
+                row.Cells[3].Value = txtRaza.Text;
+                row.Cells[4].Value = numEdad.Value;
+                row.Cells[5].Value = numPeso.Value;
+                row.Cells[6].Value = cmbDuenio.SelectedItem;
+
+                MascotaDTO m = new MascotaDTO
+                {
+                    Id = ix,
+                    NombreMascota = txtNombre.Text,
+                    EspecieId = cmbEspecie.SelectedIndex + 1,
+                    Raza = txtRaza.Text,
+                    Edad = Convert.ToInt32(numEdad.Value),
+                    EspecieNombre = cmbEspecie.Text,
+                    DuenioId = (int)cmbDuenio.SelectedValue,
+                    DuenioNombre = cmbDuenio.Text,
+                    Peso = numPeso.Value
+                };
+
+                var message = mascotaService.UpdateMascotaById(m);
+
+                MessageBox.Show(message);
+                MessageBox.Show(m.ToString());
+
+                dgvMascotas.Refresh();
                 selectedRow = null;
+                LimpiarCampos();
             }
         }
 
@@ -346,8 +369,16 @@ namespace MiAppVeterinaria.Views
                     int idMascota = ((Mascota)dgvMascotas.Rows[(int)selectedRow].DataBoundItem).Id;
 
                     var resultado = mascotaService.DeleteMascotaById(idMascota);
-                    MessageBox.Show(resultado);
- 
+                    if (resultado.StartsWith("Error al eliminar: Cannot delete"))
+                    {
+                        MessageBox.Show("No se puede eliminar ya que la mascota tiene turnos asignados");
+                    }
+                    else
+                    {
+                        MessageBox.Show(resultado);
+                    }
+
+                    mascotasList = mascotaService.GetMascotas();
                     LimpiarCampos();
                     selectedRow = null;
                 }

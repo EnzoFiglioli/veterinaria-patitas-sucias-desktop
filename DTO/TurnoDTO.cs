@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiAppVeterinaria.DTO
 {
-    class TurnoDTO
+    public class TurnoDTO
     {
         public int IdMascota {get; set;}
         public int IdVeterinario { get; set; }

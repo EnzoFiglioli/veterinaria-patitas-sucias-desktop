@@ -11,10 +11,9 @@ namespace MiAppVeterinaria.Services
     class TurnoService : ITurnoService
     {
         private readonly TurnoRepository turnoRepository = new TurnoRepository();
-        public List<Turno> ObtenerTurnos()
+        public List<TurnoAsignadoDTO> ObtenerTurnos()
         {
-            var listaTurnos = new List<Turno>();
-            return listaTurnos;
+            return turnoRepository.ListarTurnos();
         }
 
         public string RegistrarTurno(TurnoDTO turnoDTO)

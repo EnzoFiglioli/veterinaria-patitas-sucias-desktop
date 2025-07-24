@@ -7,5 +7,7 @@ namespace MiAppVeterinaria.Repository
     {
         void CreateConsulta(ConsultaDTO consulta);
         List<ConsultaDTO> ListarConsultas();
+        string EliminarConsulta(int idConsulta);
+        string ActualizarConsulta(ConsultaDTO consultaDTO);
     }
 }

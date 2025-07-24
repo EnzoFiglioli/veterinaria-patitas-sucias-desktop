@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mo4bays2OkL4grHryyN+9kiIuo4ApV5jkq9Sv5b1cSEeQzBzYkaz07cYAY8MbKb/O5II1pAaofjYIwJ5Mq6Aaw==",
+  "dgSpecHash": "2sJI1l1EH6sAZBzprAZTn930s5Nm/Gz2AwmNqx99uZaZPKbWd4m+5C6NEns4038HqcctMGtO1zzLYA1eqZigzw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Enzo\\Desktop\\Patas Felices\\MiAppVeterinaria\\MiAppVeterinaria.csproj",
+  "projectFilePath": "C:\\Users\\Enzo\\Documents\\Programacion\\C#\\Patas Felices\\MiAppVeterinaria\\MiAppVeterinaria.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Enzo\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\google.protobuf\\3.30.0\\google.protobuf.3.30.0.nupkg.sha512",

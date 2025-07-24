@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using MiAppVeterinaria.DTO;
@@ -10,7 +10,7 @@ namespace MiAppVeterinaria.Views
 {
     public class TurnosAsignadosView : UserControl
     {
-        private BindingList<TurnoAsignadoDTO> listaTurnos;
+        private List<TurnoAsignadoDTO> listaTurnos = new List<TurnoAsignadoDTO>();
         private DataGridView dgvTurnos;
         private string Rol = null;
 
@@ -101,14 +101,7 @@ namespace MiAppVeterinaria.Views
 
         private void CargarTurnosSimulados()
         {
-            listaTurnos = new BindingList<TurnoAsignadoDTO>();
-            var turnitos = turnoRepository.ListarTurnos();
-
-            foreach(TurnoAsignadoDTO turno in turnitos)
-            {
-                listaTurnos.Add(turno);
-            }
-
+            listaTurnos = turnoRepository.ListarTurnos();
             dgvTurnos.DataSource = listaTurnos;
         }
     }

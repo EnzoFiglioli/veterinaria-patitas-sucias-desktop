@@ -257,6 +257,7 @@ namespace MiAppVeterinaria.Views
             row.Cells[6].Value = cmbDuenio.Text;
 
             LimpiarCampos();
+            dgvMascotas.Refresh();
             selectedRow = null;
         }
 

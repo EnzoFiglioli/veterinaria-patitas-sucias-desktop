@@ -155,6 +155,42 @@ namespace MiAppVeterinaria.Repository
                 return "Error al eliminar: " + ex.Message;
             }
         }
+        public string ActualizarMascota(MascotaDTO m)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConnection.GetInstance().CreateConnection())
+                {
+                    conn.Open();
+                    string query = @"UPDATE Mascota 
+                                    SET 
+                                        nombre_mascota = @NombreMascota, 
+                                        especie = @Especie, 
+                                        raza = @Raza,
+                                        peso = @Peso,
+                                        edad = @Edad,
+                                        dueño = @Dueño
+                                    WHERE id_mascota = @MascotaId; ";
 
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@NombreMascota", m.NombreMascota);
+                        cmd.Parameters.AddWithValue("@Especie", m.EspecieId);
+                        cmd.Parameters.AddWithValue("@Raza", m.Raza);
+                        cmd.Parameters.AddWithValue("@Peso", m.Peso);
+                        cmd.Parameters.AddWithValue("@Edad", m.Edad);
+                        cmd.Parameters.AddWithValue("@Dueño", m.DuenioId);
+                        cmd.Parameters.AddWithValue("@MascotaId", m.Id);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"{ex.Message}";
+            }
+            return "Mascota actualizada correctamente";
+        }
     }
 }

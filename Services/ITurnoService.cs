@@ -4,9 +4,9 @@ using MiAppVeterinaria.DTO;
 
 namespace MiAppVeterinaria.Services
 {
-    interface ITurnoService
+    public interface ITurnoService
     {
-        List<Turno> ObtenerTurnos();
+        List<TurnoAsignadoDTO> ObtenerTurnos();
         string RegistrarTurno(TurnoDTO turnoDTO);
     }
 }

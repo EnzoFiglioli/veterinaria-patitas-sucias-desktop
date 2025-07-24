@@ -7,6 +7,7 @@ using MiAppVeterinaria.DTO;
 using MiAppVeterinaria.Models;
 using MiAppVeterinaria.Repository;
 using MiAppVeterinaria.Services;
+using MiAppVeterinaria.Repository;
 
 namespace MiAppVeterinaria.Views
 {
@@ -22,6 +23,7 @@ namespace MiAppVeterinaria.Views
         private readonly TurnoService turnoService = new TurnoService();
         private readonly MascotaRepository mascotaRepo = new MascotaRepository();
         private readonly VeterinarioRepository veterinarioRepo = new VeterinarioRepository();
+        private List<TurnoAsignadoDTO> turnos = new List<TurnoAsignadoDTO>();
 
         public AsignarTurnoView(string Rol)
         {

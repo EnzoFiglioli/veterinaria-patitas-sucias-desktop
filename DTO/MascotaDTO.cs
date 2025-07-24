@@ -1,6 +1,6 @@
 ﻿namespace MiAppVeterinaria.DTO
 {
-    class MascotaDTO
+    public class MascotaDTO
     {
         public int Id { get; set; }
         public string NombreMascota { get; set; }
@@ -18,14 +18,25 @@
         public string DuenioNombre { get; set; }
 
         public MascotaDTO() { }
-        public MascotaDTO(string nombreMascota, int duenioID, string especieNombre, string raza, int edad, decimal peso)
+
+        public MascotaDTO(int id, string nombreMascota, int especieId, string especieNombre, string raza, int edad, decimal peso, int duenioId, string duenioNombre)
         {
+            Id = id;
             NombreMascota = nombreMascota;
-            DuenioId = duenioID;
-            EspecieNombre = especieNombre; // ✅ esta sí existe
+            EspecieId = especieId;
+            EspecieNombre = especieNombre;
             Raza = raza;
             Edad = edad;
             Peso = peso;
+            DuenioId = duenioId;
+            DuenioNombre = duenioNombre;
         }
+
+        public override string ToString()
+        {
+            return $"ID: {Id}\nNombre: {NombreMascota}\nEspecie: {EspecieNombre} (ID: {EspecieId})\nRaza: {Raza}\nEdad: {Edad}\nPeso: {Peso}\nDueño: {DuenioNombre} (ID: {DuenioId})";
+        }
+
+
     }
 }

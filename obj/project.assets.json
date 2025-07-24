@@ -1649,11 +1649,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Enzo\\Desktop\\Patas Felices\\MiAppVeterinaria\\MiAppVeterinaria.csproj",
+      "projectUniqueName": "C:\\Users\\Enzo\\Documents\\Programacion\\C#\\Patas Felices\\MiAppVeterinaria\\MiAppVeterinaria.csproj",
       "projectName": "MiAppVeterinaria",
-      "projectPath": "C:\\Users\\Enzo\\Desktop\\Patas Felices\\MiAppVeterinaria\\MiAppVeterinaria.csproj",
+      "projectPath": "C:\\Users\\Enzo\\Documents\\Programacion\\C#\\Patas Felices\\MiAppVeterinaria\\MiAppVeterinaria.csproj",
       "packagesPath": "C:\\Users\\Enzo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Enzo\\Desktop\\Patas Felices\\MiAppVeterinaria\\obj\\",
+      "outputPath": "C:\\Users\\Enzo\\Documents\\Programacion\\C#\\Patas Felices\\MiAppVeterinaria\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Enzo\\AppData\\Roaming\\NuGet\\NuGet.Config",

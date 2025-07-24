@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using MiAppVeterinaria.Views;
+using MiAppVeterinaria.Services;
+
 
 namespace MiAppVeterinaria
 {
@@ -16,7 +18,11 @@ namespace MiAppVeterinaria
         private Button btnListarDuenios;
         private Button btnRegistrarMascota;
         private Button btnAsignarTurno;
+        private Button btnHistoriaClinica;
         private string Rol;
+
+        private readonly ITurnoService turnoService = new TurnoService();
+        private readonly IMascotaService mascotaService = new MascotaService();
 
         public Form2(string rol)
         {
@@ -31,8 +37,9 @@ namespace MiAppVeterinaria
             btnUsuarios = CrearBoton("Usuarios", () => RenderizarEnPanel(new UsuariosView(Rol)));
             btnMascotas = CrearBoton("Mascotas", () => RenderizarEnPanel(new MascotasView(Rol)));
             btnConsultas = CrearBoton("Consultas", () => RenderizarEnPanel(new ConsultasView(Rol)));
-            btnTurnos = CrearBoton("Turnos", () => RenderizarEnPanel(new TurnosView(Rol)));
-            btnReportes = CrearBoton("Reportes", () => RenderizarEnPanel(new ReportesView(Rol)));
+            btnTurnos = CrearBoton("Turnos", () => RenderizarEnPanel(new AsignarTurnoView(Rol)));
+            btnReportes = CrearBoton("Reportes", () => RenderizarEnPanel(new ReportesView(Rol,turnoService,mascotaService)));
+            btnHistoriaClinica = CrearBoton("Historial Clinico", () => RenderizarEnPanel(new ReportesView(Rol,turnoService,mascotaService)));
 
             btnRegistrarMascota = CrearBoton("Registrar Mascota", () => RenderizarEnPanel(new RegistrarMascotaView(Rol)));
             btnAsignarTurno = CrearBoton("Asignar Turno", () => RenderizarEnPanel(new AsignarTurnoView(Rol)));

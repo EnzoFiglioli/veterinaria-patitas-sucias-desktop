@@ -31,6 +31,7 @@ namespace MiAppVeterinaria.Views
 
         private readonly MascotaService mascotaService = new MascotaService();
         private readonly DuenioRepository duenioRepository = new DuenioRepository();
+        private List<TurnoAsignadoDTO> turnos = new List<TurnoAsignadoDTO>();
 
         private BindingList<Mascota> mascotasList;
 

@@ -207,18 +207,25 @@ namespace MiAppVeterinaria.Views
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
             dgvConsultas.DataSource = listaConsultas;
+            if (dgvConsultas.Columns.Contains("VeterinarioId"))
+            {
+                dgvConsultas.Columns["VeterinarioId"].Visible = false;
+            }
+
 
             dgvConsultas.CellClick += (s, e) =>
             {
                 if (e.RowIndex >= 0)
                 {
+                    selectedRow = e.RowIndex; 
+
                     var consulta = (ConsultaDTO)dgvConsultas.Rows[e.RowIndex].DataBoundItem;
 
                     txtSintoma.Text = consulta.Sintomas;
-                    txtVeterinario.SelectedItem = consulta.Veterinario;
+                    MessageBox.Show("Asignando VeterinarioId: " + consulta.VeterinarioId);
+                    txtVeterinario.SelectedValue = consulta.VeterinarioId;
                     txtFecha.Value = consulta.Fecha;
-                    txtMascota.SelectedValue = consulta.MascotaId; 
-
+                    txtMascota.SelectedValue = consulta.MascotaId;
                 }
             };
 
@@ -251,7 +258,7 @@ namespace MiAppVeterinaria.Views
                     VeterinarioId = (int)txtVeterinario.SelectedValue,
                 };
                 idConsulta = listaConsultas.Count + 1;
-
+                
                 listaConsultas.Add(c);
 
                 consultaRepository.CreateConsulta(c);
@@ -269,7 +276,11 @@ namespace MiAppVeterinaria.Views
                 consulta.Veterinario = txtVeterinario.SelectedValue.ToString();
                 consulta.Mascota = txtMascota.SelectedValue.ToString();
 
-                dgvConsultas.Refresh(); // fuerza el refresco
+                var updateConsulta = consultaRepository.ActualizarConsulta(consulta);
+
+                MessageBox.Show(updateConsulta);
+
+                dgvConsultas.Refresh(); 
                 selectedRow = null;
                 LimpiarCampos();
             }
@@ -279,11 +290,23 @@ namespace MiAppVeterinaria.Views
         {
             if (selectedRow != null)
             {
-                dgvConsultas.Rows.RemoveAt((int)selectedRow);
+                var consulta = listaConsultas[(int)selectedRow];
+
+                if (consulta.Id != 0)
+                {
+                    var message = consultaRepository.EliminarConsulta(consulta.Id);
+                    MessageBox.Show(message);
+                }
+
+                listaConsultas.RemoveAt((int)selectedRow);
+                dgvConsultas.DataSource = null;
+                dgvConsultas.DataSource = listaConsultas;
+
                 selectedRow = null;
                 LimpiarCampos();
             }
         }
+
 
         private bool ValidarFormulario()
         {
